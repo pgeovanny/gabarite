@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, flash
+from flask import Flask, render_template, redirect, url_for, request, flash, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -69,8 +69,6 @@ def dashboard():
 @app.route('/questions')
 @login_required
 def questions():
-    # Filtering logic to integrate: by law, article, difficulty, type, unresolved, favorites
-    # Simplified for brevity
     return render_template('questions.html')
 
 @app.route('/admin', methods=['GET','POST'])
@@ -88,9 +86,7 @@ def admin_panel():
 @app.route('/export')
 @login_required
 def export_pdf():
-    # Export based on current filters (simplified)
-    pdf_bytes = export_questions_pdf(current_user.id)
-    return pdf_bytes # Implementation returns PDF response
+    return export_questions_pdf(current_user.id)
 
 @app.route('/stats')
 @login_required
